@@ -24,7 +24,13 @@ phone_map = {'(608) 257-9700\u200b': '6082579700', 'no': ''}
 
 
 def get_element(file=OSM_FILE, tags=('node', 'way', 'relation')):
-    """Yield the element if it matches a specific tag type"""
+    """
+    	Yield the element if it matches a specific tag type
+    	Args:
+    		file (file object): an OSM XML-formatted file
+    	Returns:
+    		yield: next XML element
+    """
     context = ET.iterparse(file, events=('start', 'end'))
     _, root = next(context)
     for event, element in context:
@@ -34,7 +40,14 @@ def get_element(file=OSM_FILE, tags=('node', 'way', 'relation')):
 
 
 def shape_element(element):
-    """Return the node or way as a dictionary from raw XML data"""
+    """
+    	Shape a node or way as a dictionary from raw XML
+    	Args:
+    		element (XML element): parsed XML elemenet
+    	Returns:
+    		attributes (dictionary): the node's attributes
+    		in a dictionary format
+    """
     node_attributes, way_attributes = {}, {}
     way_nodes_list, tags_list = [], []
 
@@ -60,7 +73,13 @@ def shape_element_attributes(element, header):
 
 
 def shape_element_tags(element, id_):
-    """Shape the raw XML tags"""
+    """
+    	Shape the element 'tags' of an XML element
+    	Args:
+    		element (XML element): parsed XML elemenet
+    	Returns:
+    		tags (list): a list of the element's tags
+    """
     tags = []
     element_tags = element.findall('tag')
     if element_tags:

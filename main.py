@@ -3,12 +3,19 @@ from process_map import *
 
 
 # ********************************************************************#
-#     Main Function                                                  #
+#     Main Function                                                   #
 # ********************************************************************#
 
 
 def process_map(file=OSM_FILE):
-    """Iteratively process each XML element and write to csv(s)"""
+    """
+    	Iteratively process the XML document
+    	Args:
+    		.osm (file object): an XML formatted OSM file
+    	Returns:
+    		.csv (file object): multiple csv files for adding
+    		to the database
+    """
     with open(NODE_FILE, 'w', encoding='utf-8') as node_file, \
             open(NODE_TAG_FILE, 'w', encoding='utf-8') as node_tag_file, \
             open(WAY_FILE, 'w', encoding='utf-8') as way_file, \

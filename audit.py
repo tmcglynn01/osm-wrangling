@@ -14,7 +14,13 @@ address_audit = defaultdict(set)
 
 
 def audit(file=OSM_FILE):
-    """Returns dictionary values for invalid formats through audit function"""
+    """
+    	Audits a given OSM file
+    	Args:
+    		file: a file object for processing
+    	Returns:
+    		text: audited zip codes, phone nums, and street names
+    """
     f = open(file, 'r')
     for event, element in ET.iterparse(f, events=('start',)):
         if (element.tag == 'node') or (element.tag == 'way'):
@@ -44,14 +50,26 @@ def is_phone(element):
 
 
 def audit_zip_code(zip_code):
-    """Audits a zip code value to ensure it is in a valid format"""
+    """
+    	Audits a zip code to determine its validity
+    	Args:
+    		zip_code (string): pre-validated zip code
+    	Returns:
+    		None: adds to a defaultdict(set) of invalid zip codes
+    """
     match = ZIP_CODE_RE.search(zip_code)
     if not match:
         zip_code_audit[zip_code].add(zip_code)
 
 
 def audit_street_name(street_name):
-    """Audits a street value to ensure it is in a valid format"""
+    """
+    	Audits a street name to determine its validity
+    	Args:
+    		street_name (string): pre-validated street name
+    	Returns:
+    		None: adds to a defaultdict(set) of invalid street names
+    """
     match = STREET_NAME_RE.search(street_name)
     if match:
         street_type = match.group()
@@ -60,7 +78,13 @@ def audit_street_name(street_name):
 
 
 def audit_phone_num(phone_num):
-    """Audits a phone number to ensure it is in a valid format"""
+    """
+    	Audits a phone number to determine its validity
+    	Args:
+    		phone_num (string): pre-validated phone number
+    	Returns:
+    		None: adds to a defaultdict(set) of invalid phone numbers	
+    """
     match = PHONE_NUM_RE.search(phone_num)
     if not match:
         phone_num_audit[phone_num].add(phone_num)
